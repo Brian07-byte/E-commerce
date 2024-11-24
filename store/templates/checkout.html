@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Checkout - Thewenshi{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<div class="container checkout-container">
+    <h2>Checkout</h2>
+
+    <div class="row">
+        <!-- Cart Summary (Left) -->
+        <div class="col-md-7 cart-summary">
+            <h3>Cart Summary</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cart_item in cart_items %}
+                    <tr>
+                        <td>{{ cart_item.product.name }}</td>
+                        <td>
+                            <img src="{{ cart_item.product.image.url }}" alt="{{ cart_item.product.name }}" class="product-image">
+                        </td>
+                        <td>KSH {{ cart_item.product.price }}</td>
+                        <td>{{ cart_item.quantity }}</td>
+                        <td>KSH {{ cart_item.total_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h3>Total: KSH {{ cart_total }}</h3>
+        </div>
+
+        <!-- Shipping Information (Right) -->
+        <div class="col-md-5 shipping-info">
+            <h3>Shipping Information</h3>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Confirm Order</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .checkout-container {
+        margin-top: 20px;
+    }
+    .cart-summary {
+        border-right: 1px solid #ddd;
+        padding-right: 20px;
+    }
+    .shipping-info {
+        padding-left: 20px;
+    }
+    .product-image {
+        max-width: 100px;
+        height: auto;
+    }
+</style>
+
+{% endblock %}

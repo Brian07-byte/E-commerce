@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Thewenshi Store{% endblock %}
+{% block content %}
+
+<div class="store-container">
+    <header class="store-header text-center">
+        <h1>Thewenshi Store</h1>
+        <p>Discover quality products tailored to your needs.</p>
+    </header>
+
+    <div class="store-content">
+        <!-- Sidebar for Filters -->
+        <aside class="sidebar">
+            <h3>Filter by Category</h3>
+            <select id="categoryFilter" class="filter-select">
+                <option value="{% url 'store' %}" {% if not selected_category %}selected{% endif %}>All Categories</option>
+                {% for category in categories %}
+                    <option value="{% url 'store_by_category' category.id %}" {% if selected_category == category %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </aside>
+
+        <!-- Product Grid -->
+        <section class="product-grid">
+            {% for product in products %}
+            <div class="product-card">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                <div class="product-info">
+                    <h4>{{ product.name }}</h4>
+                    <div class="product-pricing">
+                        {% if product.new_price %}
+                        <span class="new-price">KSH {{ product.new_price }}</span>
+                        <span class="old-price">KSH {{ product.old_price }}</span>
+                        {% else %}
+                        <span class="new-price">KSH {{ product.price }}</span>
+                        {% endif %}
+                    </div>
+                    {% if product.flash_sale %}
+                    <span class="flash-sale">Flash Sale!</span>
+                    {% endif %}
+                    <button class="add-to-cart-btn" data-product="{{ product.id }}">Add to Cart</button>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const categoryFilter = document.getElementById('categoryFilter');
+        categoryFilter.addEventListener('change', function () {
+            window.location.href = this.value;
+        });
+
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.dataset.product;
+                fetch("{% url 'add_to_cart' 0 %}".replace('0', productId))
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        document.getElementById('cart-count').textContent = data.cart_count;
+                    })
+                    .catch(error => alert('Error: ' + error.message));
+            });
+        });
+    });
+</script>
+<style>
+    /* General Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.store-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.store-header {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.store-header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+.store-header p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+/* Content Layout */
+.store-content {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #555;
+}
+
+.filter-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Product Card */
+.product-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.product-info h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.product-pricing {
+    margin-bottom: 10px;
+}
+
+.new-price {
+    color: #27ae60;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 0.9rem;
+    margin-left: 5px;
+}
+
+.flash-sale {
+    display: inline-block;
+    background: #f39c12;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.add-to-cart-btn {
+    background: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background: #2980b9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .store-content {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        margin-bottom: 20px;
+    }
+}
+
+</style>
+{% endblock %}

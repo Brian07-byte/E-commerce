@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cart - Thewenshi{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<div class="container cart-container">
+
+    {% if cart_items %}
+    <form method="POST">
+        {% csrf_token %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cart_item in cart_items %}
+                <tr>
+                    <td>
+                        <img src="{{ cart_item.item.product.image.url }}" alt="{{ cart_item.item.product.name }}" width="50" height="50">
+                        {{ cart_item.item.product.name }}
+                    </td>
+                    <td>KSH {{ cart_item.item.product.price }}</td>
+                    <td>
+                        <input type="number" name="quantity_{{ cart_item.item.id }}" value="{{ cart_item.item.quantity }}" min="1">
+                    </td>
+                    <td>KSH {{ cart_item.total }}</td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' cart_item.item.id %}" class="btn btn-danger">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Update Quantities</button>
+    </form>
+
+    <h3>Total: KSH {{ cart_total }}</h3>
+
+    <div class="d-flex justify-content-between">
+        <!-- Continue Shopping Button -->
+        <a href="{% url 'store' %}" class="btn btn-secondary">Continue Shopping</a>
+        
+        <!-- Checkout Button -->
+        <a href="{% url 'checkout' %}" class="btn btn-success">Checkout</a>
+    </div>
+
+    <!-- Clear Cart Button -->
+    <div class="mt-3">
+        <a href="" class="btn btn-warning">Clear Cart</a>
+    </div>
+
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home - Thewenshi{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Products</h2>
+
+    <!-- Category Filter Dropdown -->
+    <div class="mb-4">
+        <label for="categoryFilter">Filter by Category:</label>
+        <select id="categoryFilter" class="form-select">
+            <option value="" selected>All Categories</option>
+            {% for category in categories %}
+                <option value="{% url 'filter_by_category' category.id %}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-4 col-sm-6">
+            <div class="card shadow-sm border-0 rounded-lg product-card" data-product="{{ product.id }}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img-top rounded-top">
+                <div class="card-body text-center">
+                    <h5>{{ product.name }}</h5>
+                    <p>KSH {{ product.price }}</p>
+                    <a href="javascript:void(0)" class="btn btn-primary addtocart" data-product="{{ product.id }}">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // When a category is selected, navigate to the filtered products page
+        $('#categoryFilter').change(function() {
+            window.location.href = $(this).val();  // Redirect to the category filter URL
+        });
+
+        $('.addtocart').click(function() {
+            var productId = $(this).data('product');  // Get the product ID
+            $.ajax({
+                url: "{% url 'add_to_cart' 0 %}".replace('0', productId),  // Dynamically build the URL
+                method: 'GET',
+                success: function(response) {
+                    alert(response.message);
+
+                    // Update cart count
+                    $('#cart-count').text(response.cart_count);
+                },
+                error: function(response) {
+                    alert('Error: ' + response.message);
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

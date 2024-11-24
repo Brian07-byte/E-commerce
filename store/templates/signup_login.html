@@ -1,0 +1,102 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup / Login</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script>
+        // Function to handle loading and success icons
+        function handleSignup(event) {
+            event.preventDefault();
+            let button = document.getElementById('signup-btn');
+            let loadingIcon = document.getElementById('loading-icon');
+            let tickIcon = document.getElementById('tick-icon');
+            button.disabled = true;
+            loadingIcon.style.display = 'inline-block';
+            
+            // Simulate an API call
+            setTimeout(() => {
+                loadingIcon.style.display = 'none';
+                tickIcon.style.display = 'inline-block';
+                // Form submission logic here (e.g., send POST request)
+                document.getElementById('signup-form').submit();
+            }, 2000); // Simulate a delay of 2 seconds
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="icon-container">
+                <span class="cart-icon">🛒</span>
+            </div>
+            <h2>Signup</h2>
+        </header>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div id="signup-container">
+            <form id="signup-form" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                    <span class="padlock-icon">🔒</span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="padlock-icon">🔒</span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <span class="padlock-icon">🔒</span>
+                </div>
+                <button id="signup-btn" type="button" onclick="handleSignup(event)">Sign Up</button>
+                <span id="loading-icon" style="display: none;">⏳</span>
+                <span id="tick-icon" style="display: none;">✔️</span>
+            </form>
+        </div>
+
+        <div id="login-container" style="display: none;">
+            <header class="header">
+                <h2>Login</h2>
+            </header>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Show login container upon success
+        document.addEventListener('DOMContentLoaded', () => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(message => {
+                if (message.textContent.toLowerCase().includes('success')) {
+                    document.getElementById('signup-container').style.display = 'none';
+                    document.getElementById('login-container').style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

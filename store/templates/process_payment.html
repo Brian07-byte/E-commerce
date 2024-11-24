@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Payment - Thewenshi{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Complete Payment for Order #{{ order.order_id }}</h1>
+
+    <div class="order-summary">
+        <h3 class="mb-3">Order Details</h3>
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>Customer Name</th>
+                <td>{{ order.customer.name }}</td>
+            </tr>
+            <tr>
+                <th>Total Amount</th>
+                <td>KSH {{ order.total_amount }}</td>
+            </tr>
+            <tr>
+                <th>Order Status</th>
+                <td>{{ order.is_paid|yesno:"Paid,Not Paid" }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="payment_method">Select Payment Method</label>
+            <select name="payment_method" id="payment_method" class="form-control">
+                <option value="Credit Card">Credit Card</option>
+                <option value="PayPal">PayPal</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Complete Payment</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

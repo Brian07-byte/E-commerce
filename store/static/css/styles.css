@@ -1,0 +1,372 @@
+/* Custom Styles for Products Page */
+.card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.card-text {
+    font-size: 1.125rem;
+    color: #555;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Responsive adjustments for product cards */
+@media (max-width: 768px) {
+    .col-md-4 {
+        max-width: 100% !important;
+    }
+}
+
+/* Padding for the container */
+.container {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Card images styling */
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Cart Table */
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #4CAF50;
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.table td {
+    color: #555;
+    font-size: 14px;
+}
+
+.table img {
+    border-radius: 4px;
+}
+
+/* Button Styles */
+.btn {
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.btn-warning {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+}
+
+.btn-warning:hover {
+    background-color: #e67e22;
+}
+
+.btn-secondary {
+    background-color: #bdc3c7;
+    color: white;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #95a5a6;
+}
+
+.btn-success {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #27ae60;
+}
+
+/* Cart Actions */
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.mt-3 {
+    margin-top: 20px;
+}
+
+.cart-container {
+    background-color: #fff;
+    padding: 0px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cart-container h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+}
+
+/* Cart Item Image */
+.cart-container img {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+}
+
+/* Input Quantity */
+input[type="number"] {
+    width: 70px;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table th, .table td {
+        padding: 10px;
+    }
+
+    .table img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .cart-container {
+        padding: 15px;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Floating Cart Action Buttons */
+.continue-shopping {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.continue-shopping:hover {
+    background-color: #2980b9;
+}
+
+.checkout-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.checkout-button:hover {
+    background-color: #27ae60;
+}
+/* Category filter styling */
+.category-filter {
+    position: sticky;
+    top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-filter label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.category-filter select {
+    width: 100%;
+}
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+h2, h3 {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Carousel Styling */
+.carousel-item img {
+    object-fit: cover;
+    height: 400px;
+    border-radius: 10px;
+}
+
+.carousel-inner {
+    border-radius: 10px;
+}
+
+/* Product Card Styling */
+.product-card {
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.card-body h5 {
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.card-body .text-success {
+    color: #28a745;
+    font-size: 1.2rem;
+}
+
+.card-body .text-muted {
+    color: #6c757d;
+    text-decoration: line-through;
+}
+
+/* Add to Cart Button */
+.btn-primary.addtocart {
+    background-color: #0069d9;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary.addtocart:hover {
+    background-color: #0056b3;
+}
+
+/* Category Filter */
+.category-filter {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.category-filter select {
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    
+</style>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Your Orders</h1>
+        
+        {% if orders %}
+            <div class="order-list">
+                {% for order in orders %}
+                    <div class="order-card p-4 mb-3 rounded shadow-lg">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h3 class="order-title">Order ID: <span class="text-primary">{{ order.order_id }}</span></h3>
+                                <p><strong>Total Amount:</strong> KSH {{ order.total_amount }}</p>
+                                <p><strong>Order Date:</strong> {{ order.created_at|date:"F j, Y, g:i a" }}</p>
+                            </div>
+                            <div class="col-md-4 text-md-right">
+                                <a href="{% url 'order_detail' order.order_id %}" class="btn btn-outline-primary btn-sm">View Order</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                You have no orders yet.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

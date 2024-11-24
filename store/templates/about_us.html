@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% block title %}about - Thewenshi{% endblock %}
+{% block content %}
+<style>
+    /* General page styling */
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+h1, h2, h3 {
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Carousel for Products */
+.carousel-inner {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.carousel-item img {
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Shop's History Section */
+section p {
+    font-size: 1.1rem;
+    color: #555;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+section {
+    margin-top: 50px;
+}
+
+.mt-5 {
+    margin-top: 3rem !important;
+}
+
+.bg-light {
+    background-color: #f9f9f9 !important;
+}
+
+.p-4 {
+    padding: 2rem;
+}
+
+/* Mission Section */
+.bg-light {
+    background-color: #eef2f7;
+}
+
+section h2 {
+    font-size: 2rem;
+    color: #007bff;
+}
+
+section p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Values Section */
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.col-md-4 {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.col-md-4 h4 {
+    color: #007bff;
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.col-md-4 p {
+    color: #555;
+    font-size: 1rem;
+}
+
+/* Testimonials Section */
+.testimonial-carousel {
+    margin-top: 30px;
+}
+
+.testimonial-carousel .carousel-item {
+    text-align: center;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-carousel .carousel-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 3px solid #007bff;
+    padding: 5px;
+}
+
+.testimonial-carousel .carousel-item p {
+    font-size: 1.2rem;
+    color: #333;
+    font-style: italic;
+}
+
+.testimonial-carousel .carousel-item p strong {
+    font-weight: bold;
+}
+
+/* Carousel Navigation Buttons */
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: #007bff;
+    border-radius: 50%;
+}
+
+/* Contact Us Section */
+section.text-center h3 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+section.text-center p {
+    font-size: 1.1rem;
+}
+
+section.text-center a {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+section.text-center a:hover {
+    text-decoration: underline;
+}
+
+</style>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">About TheWeshi</h1>
+        
+        <!-- Carousel for Products -->
+        <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for product in products %}
+                    <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                        <img src="{{ product.image.url }}" class="d-block w-100" alt="{{ product.name }}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!-- Shop's History -->
+        <section class="mt-5">
+            <h2 class="text-center mb-4">Our History</h2>
+            <p class="text-center">Wenshi Shop has been a leading provider of quality products for over a decade. Founded in [Year], our shop started with a passion for offering high-quality, affordable items to our local community. Over the years, we have expanded our product range and grown into an online shop, serving customers nationwide.</p>
+        </section>
+
+        <!-- Mission Statement -->
+        <section class="mt-5 bg-light p-4 rounded">
+            <h2 class="text-center mb-4">Our Mission</h2>
+            <p class="text-center">At Wenshi Shop, we are dedicated to providing our customers with the best products at the best prices. Our mission is to ensure customer satisfaction by offering high-quality, reliable, and trendy products. We believe in empowering our customers by delivering exceptional service and creating a seamless shopping experience.</p>
+        </section>
+
+        <!-- Shop's Values -->
+        <section class="mt-5">
+            <h2 class="text-center mb-4">Our Values</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Quality</h4>
+                    <p>We are committed to offering only the best quality products, ensuring that every item we sell meets our high standards.</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Customer First</h4>
+                    <p>Your satisfaction is our priority. We strive to provide exceptional customer service and meet your needs with a smile.</p>
+                </div>
+                <div class="col-md-4">
+                    <h4>Integrity</h4>
+                    <p>We value honesty and transparency in all our dealings. What you see is what you get.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Customer Testimonials -->
+        <section class="mt-5 bg-light p-4 rounded">
+            <h2 class="text-center mb-4">What Our Customers Say</h2>
+            <div class="testimonial-carousel carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for testimonial in testimonials %}
+                        <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                            <div class="d-flex justify-content-center align-items-center flex-column">
+                                <!-- If there's an image associated with the testimonial, display it -->
+                                {% if testimonial.image %}
+                                    <img src="{{ testimonial.image.url }}" alt="{{ testimonial.customer_name }}" class="rounded-circle mb-3" style="width: 100px; height: 100px;">
+                                {% endif %}
+                                <p class="lead">"{{ testimonial.content }}"</p>
+                                <p class="font-italic"><strong>- {{ testimonial.customer_name }}</strong></p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target=".testimonial-carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target=".testimonial-carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Contact Us Call to Action -->
+        <section class="mt-5 text-center">
+            <h3>Contact Us</h3>
+            <p>Have any questions or need assistance? <a href="{% url 'contact_us' %}">Get in touch with us</a> today!</p>
+        </section>
+    </div>
+{% endblock %}
