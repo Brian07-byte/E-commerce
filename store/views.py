@@ -182,56 +182,159 @@ def cart(request):
     })
     #Add to cart
 @login_required
-def add_to_cart(request, product_id):
-    if request.user.is_authenticated:
-        customer = request.user.customer  # Get the customer from the logged-in user
+def add_to_cart(request):
+    if request.method == 'POST':
+        try:
+            # Get product details from POST request
+            product_type = request.POST.get('product_type', 'regular')
+            product_id = request.POST.get('product_id')
 
-        # Ensure the user has an active cart or create a new one
-        cart, created = Cart.objects.get_or_create(customer=customer, completed=False)
+            # Ensure the user has a customer profile
+            customer, created = Customer.objects.get_or_create(user=request.user)
 
-        # Get the product that the user wants to add to the cart
-        product = Product.objects.get(id=product_id)
+            # Ensure the user has an active cart or create a new one
+            cart, cart_created = Cart.objects.get_or_create(customer=customer, completed=False)
 
-        # Check if the product is already in the cart
-        cart_item = CartItem.objects.filter(cart=cart, product=product).first()
+            # Handle different product types
+            if product_type == 'regular':
+                # Regular product
+                product = get_object_or_404(Product, id=product_id)
+                cart_item, item_created = CartItem.objects.get_or_create(
+                    cart=cart, 
+                    product=product,
+                    defaults={'quantity': 1}
+                )
+                
+                if not item_created:
+                    cart_item.quantity += 1
+                    cart_item.save()
 
-        if cart_item:
-            # If the product is already in the cart, increment the quantity
-            cart_item.quantity += 1
-            cart_item.save()
-        else:
-            # If the product is not in the cart, create a new cart item
-            CartItem.objects.create(cart=cart, product=product, quantity=1)
+            elif product_type == 'flash_sale':
+                # Flash Sale Product
+                flash_sale_product = get_object_or_404(FlashSaleProduct, id=product_id)
+                
+                # Check if flash sale is currently active
+                now = timezone.now()
+                if not (flash_sale_product.flash_sale_start_time <= now <= flash_sale_product.flash_sale_end_time):
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': 'Flash sale has ended or not started yet.'
+                    }, status=400)
 
-        # Get the updated cart item count
-        cart_count = cart.items.count()
+                # Additional check for flash sale availability
+                if flash_sale_product.available_quantity <= 0:
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': 'Flash sale product is sold out.'
+                    }, status=400)
 
-        # Return a JSON response with cart count
-        return JsonResponse({
-            'status': 'success',
-            'message': f'{product.name} added to cart!',
-            'cart_count': cart_count  # Include the cart item count in the response
-        })
-    else:
-        # If the user is not logged in, return an error message
-        return JsonResponse({
-            'status': 'error',
-            'message': 'You must be logged in to add items to the cart.'
-        })
+                # Add flash sale product to cart
+                cart_item, item_created = CartItem.objects.get_or_create(
+                    cart=cart, 
+                    product=flash_sale_product.product,
+                    defaults={'quantity': 1}
+                )
+                
+                if not item_created:
+                    cart_item.quantity += 1
+                
+                # Reduce available quantity
+                flash_sale_product.available_quantity -= cart_item.quantity
+                flash_sale_product.save()
+                cart_item.save()
+
+            elif product_type == 'new_product':
+                # New Product
+                new_product = get_object_or_404(NewProduct, id=product_id)
+                
+                # Add new product to cart
+                cart_item, item_created = CartItem.objects.get_or_create(
+                    cart=cart, 
+                    product=new_product.product,
+                    defaults={'quantity': 1}
+                )
+                
+                if not item_created:
+                    cart_item.quantity += 1
+                    cart_item.save()
+
+            else:
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'Invalid product type.'
+                }, status=400)
+
+            # Get the updated cart item count
+            cart_count = cart.items.count()
+
+            # Return success response
+            return JsonResponse({
+                'status': 'success',
+                'message': f'{cart_item.product.name} added to cart!',
+                'cart_count': cart_count
+            })
+
+        except Product.DoesNotExist:
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Product not found.'
+            }, status=404)
+        
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': str(e)
+            }, status=500)
+
+    # If not a POST request
+    return JsonResponse({
+        'status': 'error',
+        'message': 'Invalid request method.'
+    }, status=405)
+
+        
     
     #Remove
+@login_required
 def remove_from_cart(request, item_id):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        cart = Cart.objects.filter(customer=customer, completed=False).first()
+    try:
+        # Get the current user's active cart
+        cart = Cart.objects.get(customer=request.user.customer, completed=False)
         
-        if cart:
-            cart_item = CartItem.objects.filter(cart=cart, product__id=item_id).first()
-            if cart_item:
-                cart_item.delete()  # Remove the item from the cart
-
-        return redirect('cart')  # Redirect back to the cart page
-    return redirect('login')  # If the user is not logged in, redirect to login
+        # Find the specific cart item to remove
+        cart_item = CartItem.objects.get(
+            cart=cart, 
+            id=item_id  # Use cart item ID instead of product ID for more precise removal
+        )
+        
+        # Optional: Log the removal (for analytics or tracking)
+        product_name = cart_item.product.name
+        
+        # Remove the item from the cart
+        cart_item.delete()
+        
+        # Update cart total
+        cart.save()
+        
+        # Add a success message
+        messages.success(request, f'{product_name} has been removed from your cart.')
+        
+        return redirect('cart')
+    
+    except Cart.DoesNotExist:
+        # Handle case where no active cart exists
+        messages.error(request, 'No active cart found.')
+        return redirect('store')
+    
+    except CartItem.DoesNotExist:
+        # Handle case where the cart item doesn't exist
+        messages.error(request, 'The item you tried to remove does not exist in your cart.')
+        return redirect('cart')
+    
+    except Exception as e:
+        # Catch any unexpected errors
+        messages.error(request, f'An error occurred: {str(e)}')
+        return redirect('cart')
     
 @login_required
 def checkout(request):
@@ -347,3 +450,6 @@ def process_payment(request, order_id):
 
     # If it's not a POST request, render the payment page
     return render(request, 'process_payment.html', {'order': order})
+
+
+

@@ -1,0 +1,404 @@
+    /* Custom Styles for Thewenshi Home */
+
+    :root {
+        --primary-color: #3498db;
+        --secondary-color: #2ecc71;
+        --dark-color: #34495e;
+        --light-color: #ecf0f1;
+        --accent-color: #e74c3c;
+    }
+    .offer-banner-container {
+        position: relative;
+        overflow: hidden;
+        max-height: 50px; /* Adjust as needed */
+        transition: max-height 0.5s ease;
+    }
+    
+    .banner-slide {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transform: translateY(-100%);
+        transition: all 0.5s ease;
+        z-index: 1;
+    }
+    
+    .banner-slide.active {
+        opacity: 1;
+        transform: translateY(0);
+        z-index: 10;
+    }
+    
+    @keyframes bannerSlide {
+        0% {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+        10%, 90% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .offer-banner-container {
+            max-height: 40px;
+        }
+        
+        .offer-banner p {
+            font-size: 0.8rem;
+        }
+    }
+    /* Global Styles */
+    body {
+        font-family: 'Nunito', sans-serif;
+        line-height: 1.6;
+        color: var(--dark-color);
+        background-color: #f4f6f7;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 700;
+        color: var(--dark-color);
+        margin-bottom: 15px;
+    }
+    
+    .text-primary {
+        color: var(--primary-color) !important;
+    }
+    
+    .text-secondary {
+        color: var(--secondary-color) !important;
+    }
+    
+    /* Offer Banner */
+    .offer-banner {
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 10px 0;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+    }
+    
+   /* Advanced Search Bar Styles */
+.search-container {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.search-bar {
+    background-color: transparent;
+    padding: 0;
+    box-shadow: none;
+}
+
+.search-bar-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    width: 100%;
+    padding: 10px 15px;
+    color: var(--dark-color);
+    font-size: 14px;
+    border-radius: 30px;
+    outline: none;
+}
+
+.search-bar-wrapper:hover,
+.search-bar-wrapper.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-color: rgba(52, 152, 219, 0.3);
+}
+
+.search-bar input:focus {
+    outline: none;
+}
+
+.search-icon {
+    color: var(--primary-color);
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.search-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Micro Animations */
+@keyframes searchPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.search-bar-wrapper.active {
+    animation: searchPulse 0.5s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .search-container {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+    
+    .search-bar input {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
+}
+
+/* Dark Mode Support */
+.dark-mode .search-bar-wrapper {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .search-bar input {
+    color: var(--light-color);
+}
+
+/* Suggestion Dropdown */
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    margin-top: 5px;
+}
+
+.search-suggestions.active {
+    display: block;
+}
+
+.search-suggestion-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-suggestion-item:hover {
+    background-color: var(--light-color);
+}
+
+    
+    /* Navbar Customization */
+    .navbar {
+        background-color: var(--dark-color) !important;
+        transition: all 0.3s ease;
+    }
+    
+    .navbar-brand {
+        font-weight: 700;
+        color: white !important;
+        display: flex;
+        align-items: center;
+    }
+    
+    .navbar-brand img {
+        margin-right: 10px;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+    
+    .navbar-brand:hover img {
+        transform: rotate(360deg);
+    }
+    
+    .nav-item .nav-link {
+        color: rgba(255,255,255,0.7) !important;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .nav-item .nav-link:hover {
+        color: white !important;
+        transform: translateY(-3px);
+    }
+    
+    .nav-item .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--secondary-color);
+        transition: width 0.3s;
+    }
+    
+    .nav-item .nav-link:hover::after {
+        width: 100%;
+    }
+    
+    /* Cart and User Icons */
+    .cart-icon {
+        position: relative;
+    }
+    
+    .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: var(--accent-color);
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 0.7rem;
+    }
+    
+    /* Footer Styles */
+    footer {
+        background-color: var(--dark-color);
+        color: var(--light-color);
+        padding: 40px 0;
+    }
+    
+    footer h5 {
+        color: white;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    
+    footer ul {
+        padding: 0;
+    }
+    
+    footer ul li {
+        margin-bottom: 10px;
+    }
+    
+    footer a {
+        color: rgba(255,255,255,0.7);
+        transition: all 0.3s ease;
+    }
+    
+    footer a:hover {
+        color: var(--secondary-color);
+        text-decoration: none;
+        transform: translateX(5px);
+    }
+    
+    /* Social Media Icons */
+    .social-icons {
+        display: flex;
+        gap: 15px;
+    }
+    
+    .social-icons a {
+        color: white;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .social-icons a:hover {
+        color: var(--primary-color);
+        transform: scale(1.2);
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .navbar-brand img {
+            width: 40px;
+        }
+    
+        footer {
+            text-align: center;
+        }
+    
+        .social-icons {
+            justify-content: center;
+        }
+    }
+    
+    /* Utility Classes */
+    .bg-primary-soft {
+        background-color: rgba(52, 152, 219, 0.1);
+    }
+    
+    .border-primary {
+        border-color: var(--primary-color) !important;
+    }
+    
+    .shadow-hover {
+        transition: all 0.3s ease;
+    }
+    
+    .shadow-hover:hover {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transform: translateY(-5px);
+    }
+    
+    /* Dropdown Enhancements */
+    .dropdown-menu {
+        background-color: var(--dark-color);
+        border: none;
+    }
+    
+    .dropdown-item {
+        color: rgba(255,255,255,0.7) !important;
+        transition: all 0.3s ease;
+    }
+    
+    .dropdown-item:hover {
+        background-color: var(--primary-color);
+        color: white !important;
+    }
+    .offer-banner-container {
+        position: relative;
+        overflow: hidden;
+        height: 50px; /* Fixed height */
+    }
+    
+    .banner-slide {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transform: translateY(-100%);
+        transition: all 0.5s ease;
+        z-index: 1;
+    }
+    
+    .banner-slide.active {
+        opacity: 1;
+        transform: translateY(0);
+        z-index: 10;
+    }

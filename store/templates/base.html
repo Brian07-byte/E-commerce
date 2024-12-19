@@ -14,346 +14,54 @@
 
     <!-- Font Awesome for Icons -->
     <link href="https://kit.fontawesome.com/a076d05399.js" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
 
     <!-- Custom Styles -->
-    <style>
-    /* Global Styles */
-    body {
-        font-family: 'Arial', sans-serif;
-        line-height: 1.6;
-        margin: 0;
-        padding: 0;
-        background-color: #1fb9e4;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        color: #ea2b2b;
-        font-weight: 600;
-        letter-spacing: 1px;
-    }
-
-    p {
-        color: #d9eb36;
-    }
-
-    /* Navbar Styles */
-    .navbar {
-        position: sticky;
-        top: 0;
-        background-color: #c92222;
-        z-index: 999;
-        box-shadow: 0 2px 5px rgba(188, 59, 188, 0.1);
-    }
-
-    .navbar-brand {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: #fff !important;
-        text-transform: uppercase;
-    }
-
-    .navbar-nav .nav-link {
-        color: #fff;
-        font-size: 1.1rem;
-        padding: 0.75rem 1.25rem;
-        transition: background-color 0.3s ease;
-    }
-
-    .navbar-nav .nav-link:hover {
-        background-color: #d6f318;
-        border-radius: 5px;
-    }
-
-    .navbar-toggler-icon {
-        background-color: #fff;
-    }
-
-    .dropdown-menu {
-        max-height: 300px;
-        overflow-y: auto;
-    }
-
-    /* Offer Banner */
-    .offer-banner {
-        font-size: 1.2rem;
-        font-weight: bold;
-        letter-spacing: 1px;
-        background-color: #f39c12;
-        color: white;
-        padding: 10px 0;
-    }
-
-    /* Search Bar */
-    .search-bar {
-        margin-top: 20px;
-        background-color: #fff;
-        padding: 15px;
-        border-radius: 5px;
-    }
-
-    .search-bar input[type="search"] {
-        border-radius: 25px;
-        border: 1px solid #ccc;
-        padding: 10px 20px;
-        font-size: 1rem;
-        width: 80%;
-        margin-right: 10px;
-        transition: all 0.3s ease;
-    }
-
-    .search-bar input[type="search"]:focus {
-        border-color: #f39c12;
-        outline: none;
-    }
-
-    .search-bar button {
-        background-color: #f39c12;
-        border: none;
-        padding: 10px 20px;
-        color: #fff;
-        font-size: 1rem;
-        cursor: pointer;
-        border-radius: 25px;
-        transition: all 0.3s ease;
-    }
-
-    .search-bar button:hover {
-        background-color: #e67e22;
-    }
-
-    /* Main Content Section */
-    .container {
-        margin-top: 30px;
-    }
-
-    .content-block {
-        margin-bottom: 40px;
-    }
-
-    .content-block img {
-        width: 100%;
-        border-radius: 10px;
-    }
-
-    .content-block h2 {
-        margin-top: 20px;
-        font-size: 2rem;
-        color: #333;
-    }
-
-    .content-block p {
-        margin-top: 15px;
-        font-size: 1.1rem;
-        line-height: 1.7;
-    }
-
-    /* Footer Styles */
-    footer {
-        background-color: #1bc11b;
-        color: white;
-        padding: 40px 0;
-        margin-top: 50px;
-    }
-
-    footer h5 {
-        font-size: 1.4rem;
-        font-weight: bold;
-    }
-
-    footer ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    footer ul li {
-        margin: 10px 0;
-    }
-
-    footer ul li a {
-        color: #bbb;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    footer ul li a:hover {
-        color: #f39c12;
-    }
-
-    .social-icons i {
-        font-size: 1.5rem;
-        margin-right: 15px;
-        color: #fff;
-        transition: color 0.3s ease;
-    }
-
-    .social-icons i:hover {
-        color: #f39c12;
-    }
-
-    /* Button Styles */
-    .btn {
-        background-color: #f39c12;
-        color: white;
-        padding: 10px 20px;
-        font-size: 1rem;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-        border: none;
-    }
-
-    .btn:hover {
-        background-color: #e67e22;
-    }
-
-    .btn-outline-light {
-        color: #fff;
-        border-color: #fff;
-    }
-
-    .btn-outline-light:hover {
-        background-color: #fff;
-        color: #333;
-    }
-
-    /* Form Styling */
-    .form-control {
-        border-radius: 25px;
-        border: 1px solid #ccc;
-        padding: 10px 20px;
-        font-size: 1rem;
-        margin-bottom: 15px;
-        transition: border-color 0.3s ease;
-    }
-
-    .form-control:focus {
-        border-color: #f39c12;
-        outline: none;
-    }
-
-    .form-group {
-        margin-bottom: 25px;
-    }
-
-    /* Card Styling */
-    .card {
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    }
-
-    .card-header {
-        background-color: #f39c12;
-        color: white;
-        font-weight: bold;
-    }
-
-    .card-body {
-        padding: 20px;
-        background-color: #fff;
-    }
-
-    .card-footer {
-        background-color: #f9f9f9;
-        text-align: center;
-        border-top: 1px solid #eee;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .navbar-nav {
-            text-align: center;
-        }
-
-        .search-bar {
-            text-align: center;
-        }
-
-        .content-block {
-            text-align: center;
-        }
-
-        .footer {
-            text-align: center;
-        }
-
-        .social-icons i {
-            margin-right: 10px;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .navbar-brand {
-            font-size: 1.5rem;
-        }
-
-        .search-bar input[type="search"] {
-            width: 70%;
-        }
-
-        .search-bar button {
-            width: 30%;
-        }
-
-        footer {
-            padding: 30px 0;
-        }
-    }
-
-    /* Utility Classes */
-    .text-center {
-        text-align: center !important;
-    }
-
-    .mt-5 {
-        margin-top: 5rem !important;
-    }
-
-    .mb-5 {
-        margin-bottom: 5rem !important;
-    }
-
-    .py-4 {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-    }
-
-    .rounded {
-        border-radius: 8px !important;
-    }
-
-    /* Spinner/Loading Animation */
-    .spinner-border {
-        width: 3rem;
-        height: 3rem;
-        border-width: 5px;
-        color: #f39c12;
-    }
-</style>
-
-    </style>
+    
 </head>
+
 <body>
     <!-- Offer Banner -->
-    <div class="offer-banner bg-primary text-white py-2 text-center">
-        <p class="mb-0">🎉 Special Offer: 50% OFF on all items this week! 🛍️</p>
+    <div class="offer-banner-container">
+        <div class="offer-banner bg-primary text-white py-2 text-center banner-slide">
+            <p class="mb-0">🎉 Special Offer: 50% OFF on all items this week! 🛍️</p>
+        </div>
+        
+        <div class="offer-banner bg-success text-white py-2 text-center banner-slide">
+            <p class="mb-0">🚚 Free Shipping on Orders Over $100! 📦</p>
+        </div>
+        
+        <div class="offer-banner bg-danger text-white py-2 text-center banner-slide">
+            <p class="mb-0">🎊 Summer Sale: Buy 2 Get 1 Free! 👗</p>
+        </div>
+        
+        <div class="offer-banner bg-warning text-dark py-2 text-center banner-slide">
+            <p class="mb-0">⏰ Limited Time: Extra 20% Off Clearance Items! 💥</p>
+        </div>
     </div>
-
+    
     <!-- Search Bar Below the Offer Banner -->
-    <div class="search-bar container">
-        <form class="d-flex ms-3" action="{% url 'store' %}" method="GET">
-            <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search" name="q">
-            <button class="btn btn-outline-light" type="submit">Search</button>
-        </form>
+    <div class="search-container">
+        <div class="search-bar">
+            <div class="search-bar-wrapper">
+                <input 
+                    type="text" 
+                    placeholder="Search products, categories..." 
+                    class="form-control"
+                >
+                <div class="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+            <div class="search-suggestions">
+                <!-- Dynamically populated suggestions -->
+            </div>
+        </div>
     </div>
+    
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="/">
                 <img src="{% static 'images/logo.png' %}" alt="" style="width: 50px; height: auto;">
@@ -384,10 +92,7 @@
                     </li>
 
                     <!-- Category Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Categories
-                        </a>
+                    
                         <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
                             {% for category in categories %}
                                 <li><a class="dropdown-item" href="{% url 'store_by_category' category.id %}">{{ category.name }}</a></li>
@@ -487,5 +192,75 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const searchWrapper = document.querySelector('.search-bar-wrapper');
+    const searchInput = document.querySelector('.search-bar input');
+    const searchIcon = document.querySelector('.search-icon');
+    const suggestionContainer = document.querySelector('.search-suggestions');
+
+    // Focus and Blur Effects
+    searchInput.addEventListener('focus', () => {
+        searchWrapper.classList.add('active');
+    });
+
+    searchInput.addEventListener('blur', () => {
+        searchWrapper.classList.remove('active');
+    });
+
+    // Search Icon Click
+    searchIcon.addEventListener('click', () => {
+        searchInput.focus();
+    });
+
+    // Simple Search Suggestions (can be replaced with API call)
+    const suggestions = [
+        'Laptops', 
+        'Smartphones', 
+        'Headphones', 
+        'Gaming Accessories'
+    ];
+
+    searchInput.addEventListener('input', (e) => {
+        const value = e.target.value.toLowerCase();
+        const filteredSuggestions = suggestions.filter(item => 
+            item.toLowerCase().includes(value)
+        );
+
+        // Populate suggestions
+        suggestionContainer.innerHTML = filteredSuggestions.map(item => 
+            `<div class="search-suggestion-item">${item}</div>`
+        ).join('');
+
+        suggestionContainer.classList.toggle('active', filteredSuggestions.length > 0);
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const banners = document.querySelectorAll('.banner-slide');
+    let currentBannerIndex = 0;
+
+    function showNextBanner() {
+        // Hide current banner
+        banners.forEach(banner => {
+            banner.classList.remove('active');
+        });
+
+        // Show next banner
+        banners[currentBannerIndex].classList.add('active');
+
+        // Increment index or reset to 0
+        currentBannerIndex = (currentBannerIndex + 1) % banners.length;
+    }
+
+    // Initially show first banner
+    banners[0].classList.add('active');
+
+    // Change banner every 5 seconds
+    setInterval(showNextBanner, 5000);
+});
+
+    </script>
 </body>
 </html>
+
